@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+import random
 
 TOKEN = open("fsabottoken.txt", "rt")
 
@@ -70,6 +71,34 @@ async def purge(ctx, amount=0):
     except:
         await ctx.send("You fucked it up.")
 
+#Team code below here
+
+players = []
+
+@bot.command()
+async def jointeam(ctx):
+    players.append(ctx.message.author.display_name)
+    await ctx.send(ctx.message.author.display_name + " added to list.")
+
+@bot.command()
+async def showlist(ctx):
+    await ctx.send(players)
+
+@bot.command()
+async def clearlist(ctx):
+    players.clear()
+
+@bot.command()
+async def maketeams(ctx):
+    teamOne = []
+    teamTwo = []
+    random.shuffle(players)
+    for x in range(0, len(players)):
+        if x+1 <= (len(players)/2):
+            teamOne.append(players[x])
+        else:
+            teamTwo.append(players[x])
+    await ctx.send("Team 1 is " + ", ".join(teamOne) + " Team 2 is " + ", ".join(teamTwo) +  ".")
 
 
 
