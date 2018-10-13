@@ -2,6 +2,7 @@
 
 import discord
 from discord.ext import commands
+import asyncio
 
 TOKEN = open("fsabottoken.txt", "rt")
 
@@ -50,6 +51,27 @@ async def remove(ctx, *, inrole):
         await ctx.send("The role " + str(role) + " was removed from " + str(user))
     except: 
         await ctx.send("Invalid role")
+
+@bot.command()
+async def heresy(ctx):
+    await ctx.send('https://imgur.com/a/kjBxW1o')
+
+@bot.command()
+async def purge(ctx, amount=0):
+    if ctx.message.author.roles[len(ctx.message.author.roles)-1].permissions.manage_channels == False: #tied permission to purge with mannage channels
+        await ctx.send("Don't try that.") 
+        return
+    try:
+        await ctx.channel.purge(limit=amount+2)
+        await ctx.send("https://imgur.com/a/6oJct5q")
+        await ctx.send(str(amount) + " messeges purged.")
+        await asyncio.sleep(4)
+        await ctx.channel.purge(limit=2)
+    except:
+        await ctx.send("You fucked it up.")
+
+
+
 
 bot.run(TOKEN.read())
 
